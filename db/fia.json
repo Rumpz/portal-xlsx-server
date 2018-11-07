@@ -1,0 +1,8 @@
+{
+  "connectionLimit": 5,
+  "host": "WSTPVFIA001",
+  "user": "sfemartins",
+  "password": "bi2018inhy",
+  "multipleStatements": true,
+  "dateStrings": "date"
+}
