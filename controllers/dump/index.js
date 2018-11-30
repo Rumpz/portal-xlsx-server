@@ -1,3 +1,4 @@
 module.exports = {
-  columns: require('./columns')
+  columns: require('./columns'),
+  procedure: require('./procedure')
 };

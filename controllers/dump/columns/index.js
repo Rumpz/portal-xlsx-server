@@ -17,7 +17,7 @@ function columnsByID (req, res, next) {
 }
 
 function exportXLS (req, res, next) {
-  // Set req timeout to 10 min in case of a massive file request
+  // Set req timeout to 20 min in case of a massive file request
   req.setTimeout(1200000);
   FINDCONTROLLER.exportXLS(req.query, (err, rows) => {
     if (err) return res.status(500).json(err);

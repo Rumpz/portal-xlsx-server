@@ -71,26 +71,30 @@ function exportXLS (data, callback) {
     const filename = `./public/excelFiles/Extração_${data.searchTable}_${moment(data.startDate).format('YYYY-MM-DD')}_a_${data.endDate}.xlsx`;
     if (err) return callback(err);
     if (!rows.length) return callback(null, rows);
-
-    console.log('inside method');
-    const Excel = require('exceljs');
-    const workbook = new Excel.stream.xlsx.WorkbookWriter({filename: filename});
-    const worksheet = workbook.addWorksheet('my sheet');
-    const keys = Object.keys(rows[0]);
-    const col = [];
-
-    for (let i in keys) {
-      col.push({ header: keys[i], key: keys[i] });
-      worksheet.columns = col;
-    }
-
-    for (let i = 0; i <= rows.length; i++) {
-      worksheet.addRow(rows[i]).commit();
-    }
-    workbook.commit()
-      .then(response => callback(null, response.stream.path))
-      .catch(err => callback(err));
+    createWorkBook(rows, filename, callback);
   });
+}
+
+function createWorkBook (rows, filename, callback) {
+  console.log('inside method');
+  const Excel = require('exceljs');
+  const workbook = new Excel.stream.xlsx.WorkbookWriter({filename: filename});
+  const worksheet = workbook.addWorksheet('my sheet');
+  const keys = Object.keys(rows[0]);
+  const col = [];
+
+  for (let i in keys) {
+    col.push({ header: keys[i], key: keys[i] });
+    worksheet.columns = col;
+  }
+
+  for (let i = 0; i <= rows.length; i++) {
+    worksheet.addRow(rows[i]).commit();
+  }
+
+  workbook.commit()
+    .then(response => callback(null, response.stream.path))
+    .catch(err => callback(err));
 }
 
 module.exports = {
