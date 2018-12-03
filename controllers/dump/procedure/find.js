@@ -1,13 +1,16 @@
 const dumpProcedureFindModel = require('models').dump.procedure.find;
-const moment = require('moment');
 
 function byProcedure (data, callback) {
   dumpProcedureFindModel.exportData(data, (err, rows) => {
-    const filename = `./public/excelFiles/Extração_Procedimento.xlsx`;
     if (err) return callback(err);
     if (!rows.length) return callback(null, rows);
-    // remove OkPacket info from array
+
+    // get filename
+    const filename = `./public/excelFiles/${rows[0][0].ficheiro}.xlsx`;
+    // remove OkPacket and Filename info from array
+    rows.splice(0, 1);
     rows.pop(rows[rows.length - 1]);
+
     // get Sheets Name // DATA for workbook
     const adjustedData = dataFormater(rows);
     getProcedure(adjustedData, filename, callback);

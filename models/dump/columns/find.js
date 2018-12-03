@@ -44,7 +44,7 @@ function columnsByID (id, callback) {
     LEFT JOIN dumper_aux_tables ON (dumper.id = dumper_aux_tables.dumperFK)
   WHERE
     dumper.id = ?
-  ORDER BY dumper_aux_tables.input_label`;
+  ORDER BY dumper_aux_tables.id`;
   connection(portalDB, sql, id, callback);
 }
 

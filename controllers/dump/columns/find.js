@@ -75,7 +75,7 @@ function exportXLS (data, callback) {
   });
 }
 
-function createWorkBook (rows, filename, callback) {
+async function createWorkBook (rows, filename, callback) {
   console.log('inside method');
   const Excel = require('exceljs');
   const workbook = new Excel.stream.xlsx.WorkbookWriter({filename: filename});
@@ -85,8 +85,8 @@ function createWorkBook (rows, filename, callback) {
 
   for (let i in keys) {
     col.push({ header: keys[i], key: keys[i] });
-    worksheet.columns = col;
   }
+  worksheet.columns = col;
 
   for (let i = 0; i <= rows.length; i++) {
     worksheet.addRow(rows[i]).commit();
@@ -102,3 +102,65 @@ module.exports = {
   columnsByID: columnsByID,
   exportXLS: exportXLS
 };
+
+/*
+function exportXLS (data, callback) {
+  data.selectedInputs = JSON.parse(data.selectedInputs)
+  dumpColFindModel.exportData(data, (err, rows) => {
+    if (err) return callback(err)
+    if (!rows.length) return callback()
+    const header = Object.values(rows.shift()).map(v => ({ header: v, key:  }))
+    const filename = `./public/excelFiles/Extração_${data.searchTable}_${moment(data.startDate).format('YYYY-MM-DD')}_a_${data.endDate}.xlsx`;
+    createWorkBook(header, rows, filename)
+      .then(responses => callback(null, responses[0].stream.path)) // promise all return array of responses
+      .catch(err => callback(err))
+  })
+}
+
+function createWorkBook (header, data, filename) {
+  const numberOfRows = data.length
+  const rowsPerBatch = 1000
+  const workbook = new Excel.stream.xlsx.WorkbookWriter({ filename: filename })
+  const worksheet = workbook.addWorksheet('my sheet')
+  const batchRows = []
+  let counter = 0
+
+  worksheet.columns = header
+
+  for (let i = 1; i < numberOfRows; i++) {
+    if ((counter + 1) * rowsPerBatch < i) {
+      batchRows[counter] = worksheet.addRows(batchRows[counter]).commit()
+      counter++
+    }
+    if (!batchRows[counter]) {
+      batchRows[counter] = []
+    }
+    batchRows[counter].push(data[i])
+  }
+
+  return Promise.all(batchRows)
+}
+*/
+
+/*
+function createWorkBook(header, data, filename) {
+  const numberOfRows = data.length;
+  const rowsPerBatch = 1000;
+  const workbook = new Excel.stream.xlsx.WorkbookWriter({ filename: filename });
+  const worksheet = workbook.addWorksheet("my sheet");
+  const batchRows = [];
+  let counter = 0;
+
+  worksheet.columns = header;
+
+  data.forEach((row, index) => {
+    if ((counter + 1) * rowsPerBatch < index) {
+      worksheet.commit();
+      counter++;
+    }
+    worksheet.addRow(row);
+  });
+
+  return workbook.commit();
+}
+*/
