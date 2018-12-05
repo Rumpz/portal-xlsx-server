@@ -5,7 +5,7 @@ function exportProcedureXLS (req, res, next) {
   req.setTimeout(1200000);
   FINDCONTROLLER.byProcedure(req.query, (err, rows) => {
     if (err) return res.status(500).json(err);
-    // if (!rows.length) return res.status(404).json('Not Found');
+    if (!rows) return res.status(404).json('Not Found');
     res.download(rows, (err) => {
       if (err) return err;
       deleteFile(rows);
