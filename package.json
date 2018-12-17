@@ -19,7 +19,9 @@
     "express": "^4.13.0",
     "moment-timezone": "^0.5.13",
     "morgan": "^1.6.0",
-    "mysql": "^2.7.0"
+    "multer": "^1.4.1",
+    "mysql": "^2.7.0",
+    "save": "^2.3.3"
   },
   "devDependencies": {
     "jest": "^23.6.0",

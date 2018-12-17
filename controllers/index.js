@@ -1,3 +1,4 @@
 module.exports = {
-  dump: require('./dump')
+  dump: require('./dump'),
+  listagens: require('./listagens')
 };

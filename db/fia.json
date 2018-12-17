@@ -1,8 +1,8 @@
 {
   "connectionLimit": 5,
   "host": "WSTPVFIA001",
-  "user": "sfemartins",
-  "password": "bi2018inhy",
+  "user": "portal_reporting",
+  "password": "portal_reporting",
   "multipleStatements": true,
   "dateStrings": "date"
 }
