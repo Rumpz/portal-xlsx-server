@@ -8,7 +8,7 @@ const dumperConn = require('db').dumperConnection;
 
 function addList (data, user, callback) {
   let sql =
-  `INSERT IGNORE INTO ${listTable} (field_value, user) VALUES ?`;
+  `INSERT IGNORE INTO ${listTable} (field_value, username) VALUES ?`;
   let values = [data, user];
   connection(portalDB, sql, values, callback);
 }

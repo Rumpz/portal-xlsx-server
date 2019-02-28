@@ -32,6 +32,7 @@ function getOptions (id, callback) {
     dumper.maquina,
     dumper.imagem,
     dumper.tabela,
+    dumper.filtros_datas,
     dumper.colunas_output,
     dumper.listagem
   FROM ${dumperTable}
@@ -44,7 +45,7 @@ function getOptions (id, callback) {
 
 function getXLS (data, user, callback) {
   const db = data.dbConnection;
-  const outputs = data.selectedOutputs;
+  const outputs = data.selectedOutputs.map(e => e.replace(e, `a.${e}`));
   const table = data.tabela;
   const campo = data.campoPesquisa;
   const sql =
@@ -53,6 +54,16 @@ function getXLS (data, user, callback) {
     INNER JOIN 
       portal_reporting.temp_list_holder b
         ON a.${campo} = b.field_value
-    WHERE user = ?`;
+    WHERE ${checkDates(data)}
+    b.username = ?`;
   dumperConn(db, sql, user, callback);
+}
+
+function checkDates (data) {
+  if (!data.tipoDeData || !data.startDate || !data.endDate) {
+    return '';
+  } else {
+    return `a.${data.tipoDeData} 
+      BETWEEN '${data.startDate}' AND '${data.endDate}' AND`;
+  }
 }

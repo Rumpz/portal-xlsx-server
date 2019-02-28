@@ -15,6 +15,6 @@ function byUser (user, callback) {
   const sql =
   `DELETE
     FROM temp_list_holder
-  WHERE user = ?`;
+  WHERE username = ?`;
   connection(portalDB, sql, user, callback);
 }
